@@ -1,1 +1,61 @@
-.vscode
+##############################
+# PYTHON (cliente)
+##############################
+
+# Entorno virtual
+venv/
+env/
+
+# Cachés y archivos temporales
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
+*$py.class
+
+# Config de entorno y entorno local
+.env
+*.env
+
+# VS Code
+.vscode/
+
+##############################
+# JAVA / SPRING / GRADLE (servidor)
+##############################
+
+# Archivos de construcción y dependencias
+.gradle/
+build/
+out/
+
+# Archivos de proyecto generados
+*.class
+*.jar
+*.war
+*.ear
+
+# Archivos temporales
+*.log
+*.tmp
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# STS
+.springBeans
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
