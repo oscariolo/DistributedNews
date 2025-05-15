@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootserver.distributednewsserver.dto.SendNewsDto;
+import com.springbootserver.distributednewsserver.service.DataToNewsProcessorService;
 import com.springbootserver.distributednewsserver.service.NewsProducerService;
 
 @RestController
@@ -16,6 +17,8 @@ import com.springbootserver.distributednewsserver.service.NewsProducerService;
 public class NewsProducerController {
     @Autowired
     private NewsProducerService newsProducerService;
+    @Autowired
+    private DataToNewsProcessorService dataToNewsProcessorService;
     
     @PostMapping
     public ResponseEntity<?> sendNews(@RequestBody SendNewsDto newsDto) {
@@ -23,8 +26,9 @@ public class NewsProducerController {
         try{
         if (newsDto.getTopicName() == null || newsDto.getTopicName().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request");
-        }
-            newsProducerService.sendNews(newsDto.getTopicName(), newsDto.getMessage());
+        }   
+            SendNewsDto processedNews = dataToNewsProcessorService.processData(newsDto.getMessage()).get();
+            newsProducerService.sendNews(processedNews.getTopicName(), processedNews.getMessage());
             return ResponseEntity.status(HttpStatus.CREATED).body(newsDto);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending news: " + e.getMessage());
