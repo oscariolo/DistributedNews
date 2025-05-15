@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springbootserver.distributednewsserver.dto.SendNewsDto;
 import com.springbootserver.distributednewsserver.service.NewsProducerService;
 
 @RestController
@@ -17,10 +18,18 @@ public class NewsProducerController {
     private NewsProducerService newsProducerService;
     
     @PostMapping
-    public ResponseEntity<String> sendNews(@RequestBody String message) {
+    public ResponseEntity<?> sendNews(@RequestBody SendNewsDto newsDto) {
         // Send the news message to the specified Kafka topic
-        newsProducerService.sendNews("default-topic", message);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        try{
+        if (newsDto.getTopicName() == null || newsDto.getTopicName().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request");
+        }
+            newsProducerService.sendNews(newsDto.getTopicName(), newsDto.getMessage());
+            return ResponseEntity.status(HttpStatus.CREATED).body(newsDto);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending news: " + e.getMessage());
+        
+        }
     }
     
 
