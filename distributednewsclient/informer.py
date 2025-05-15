@@ -18,20 +18,20 @@ def send_messages(topic_name, messages):
 
 # Prepare sample data for sports and politics topics
 sports_messages = [
-	{"headline": "Team wins championship", "content": "An amazing game."},
-	{"headline": "Star player injured", "content": "Game postponed."},
+	{"topicName":"sports","headline": "Team wins championship", "content": "An amazing game."},
+	{"topicName":"sports","headline": "Star player injured", "content": "Game postponed."},
 	# ...existing data...
 ]
 
 politics_messages = [
-	{"headline": "Election results announced", "content": "Major victory."},
-	{"headline": "New policy introduced", "content": "Economic reforms."},
+	{"topicName":"politics","headline": "Election results announced", "content": "Major victory."},
+	{"topicName":"politics","headline": "New policy introduced", "content": "Economic reforms."},
 	# ...existing data...
 ]
 
 # Send messages to respective topics
-send_messages("sports", sports_messages)
-send_messages("politics", politics_messages)
+send_messages("data", sports_messages)
+send_messages("data", politics_messages)
 
 # Flush and close the producer
 producer.flush()
