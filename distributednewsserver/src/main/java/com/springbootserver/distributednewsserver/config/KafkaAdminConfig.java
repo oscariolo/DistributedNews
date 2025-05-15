@@ -16,14 +16,16 @@ public class KafkaAdminConfig {
     private KafkaProperties kafkaProperties;
 
     @Bean
-    KafkaAdmin kafkaAdmin(){
+    public KafkaAdmin kafkaAdmin(){
+        //Servidor de arranque de kafka
         var configs = new HashMap<String,Object>();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
         return new KafkaAdmin(configs);
     }
 
     @Bean
-    KafkaAdmin.NewTopics newTopics() {
+    public KafkaAdmin.NewTopics newTopics() {
+        // Crear servidor de arranque, crea los topics y las particiones
         // Create a new topic with the specified name and configuration
         return new KafkaAdmin.NewTopics(
                 TopicBuilder.name("default-topic")

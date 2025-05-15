@@ -18,8 +18,11 @@ public class NewsProducerService {
         {
             if(ex != null){
                 System.out.println("Error sending message: " + ex.getMessage());
+                // log.error("Error sending message: {}", ex.getMessage());
             }else{
                 System.out.println("Message sent successfully: " + result.getRecordMetadata().offset());
+                // log.info("Message sent successfully: {} ", result.getProducerRecord().value());
+                // log.info("Topic {}, Partition {}, Offset {} ", result.getProducerRecord().topic(),result.getRecordMetadata().partition(), result.getRecordMetadata().offset());
             }
         });
     }

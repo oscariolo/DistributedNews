@@ -23,8 +23,8 @@ public class NewsProducerFactoryConfig {
     public ProducerFactory<String,String> producerFactory() {
         // Create a ProducerFactory with the specified properties
        var configs = new HashMap<String,Object>();
-       configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
-       configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+       configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers()); //Obtenemos servidor de arranque
+       configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class); //
        configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
        return new DefaultKafkaProducerFactory<>(configs);
     }
@@ -32,6 +32,7 @@ public class NewsProducerFactoryConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         // Create a KafkaTemplate with the ProducerFactory
+        // Facilita la produccion de mensajes a un topic
         return new KafkaTemplate<>(producerFactory());
     }
     
