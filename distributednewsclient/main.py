@@ -7,7 +7,6 @@ def mostrar_menu():
     print("1. Suscribirse a tópicos")
     print("2. Ver suscripciones activas")
     print("3. Desuscribirse de un tópico")
-    print("4. Agregar información (pendiente)")
     print("0. Salir")
 
 if __name__ == "__main__":
