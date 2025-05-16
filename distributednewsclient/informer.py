@@ -1,6 +1,8 @@
 from kafka import KafkaProducer
 import json
 import time
+import fakeDataGenerator
+import threading
 
 # Initialize KafkaProducer with JSON serializer
 producer = KafkaProducer(
@@ -16,22 +18,18 @@ def send_messages(topic_name, messages):
 		print(f"Sent to {topic_name}: {msg}")
 		time.sleep(0.5)  # Simulate delay
 
-# Prepare sample data for sports and politics topics
-sports_messages = [
-	{"topicName":"sports","headline": "Team wins championship", "content": "An amazing game."},
-	{"topicName":"sports","headline": "Star player injured", "content": "Game postponed."},
-	# ...existing data...
-]
+sports_messages = fakeDataGenerator.generate_sports_messages(10)
+politics_messages = fakeDataGenerator.generate_politics_messages(10)
 
-politics_messages = [
-	{"topicName":"politics","headline": "Election results announced", "content": "Major victory."},
-	{"topicName":"politics","headline": "New policy introduced", "content": "Economic reforms."},
-	# ...existing data...
-]
+# Send both sports and politics messages concurrently
+thread_sports = threading.Thread(target=send_messages, args=("data", sports_messages))
+thread_politics = threading.Thread(target=send_messages, args=("data", politics_messages))
 
-# Send messages to respective topics
-send_messages("data", sports_messages)
-send_messages("data", politics_messages)
+thread_sports.start()
+thread_politics.start()
+
+thread_sports.join()
+thread_politics.join()
 
 # Flush and close the producer
 producer.flush()
