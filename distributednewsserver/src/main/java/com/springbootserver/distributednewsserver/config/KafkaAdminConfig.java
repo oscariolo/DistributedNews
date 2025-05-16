@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.config.TopicBuilder;
+//import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.KafkaAdmin;
 
 @Configuration
@@ -23,16 +23,16 @@ public class KafkaAdminConfig {
         return new KafkaAdmin(configs);
     }
 
-    @Bean
-    public KafkaAdmin.NewTopics newTopics() {
-        // Crear servidor de arranque, crea los topics y las particiones
-        // Create a new topic with the specified name and configuration
-        return new KafkaAdmin.NewTopics(
-                TopicBuilder.name("default-topic")
-                        .partitions(2)
-                        .replicas(1)
-                        .build()
-        );
-    }
+    // @Bean
+    // public KafkaAdmin.NewTopics newTopics() {
+    //     // Crear servidor de arranque, crea los topics y las particiones
+    //     // Create a new topic with the specified name and configuration
+    //     // return new KafkaAdmin.NewTopics(
+    //     //         TopicBuilder.name("default-topic")
+    //     //                 .partitions(2)
+    //     //                 .replicas(1)
+    //     //                 .build()
+    //     // );
+    // }
     
 }
