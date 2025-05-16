@@ -35,6 +35,7 @@ public class TopicController {
     public ResponseEntity<?> listTopics() {
         try {
             List<String> topics = kafkaTopicService.getTopics();
+            topics.remove("data");
             return ResponseEntity.ok(topics);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
