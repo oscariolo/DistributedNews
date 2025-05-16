@@ -1,16 +1,18 @@
 from kafka import KafkaConsumer
+import uuid
 
-def consumir_topico(topico, detener_evento):
+def consumir_topico(topico, detener_evento, group_id=None):
+    if group_id is None:
+        group_id = f"distributed-news-client-{uuid.uuid4()}"  # Genera un id único cada vez
     consumer = KafkaConsumer(
         topico,
         bootstrap_servers='localhost:9092',
         auto_offset_reset='earliest',
         enable_auto_commit=True,
-        group_id='distributed-news-client',
+        group_id=group_id,
         value_deserializer=lambda x: x.decode('utf-8'),
-        consumer_timeout_ms=1000  # <-- Esto hace que `poll` no se quede bloqueado
+        consumer_timeout_ms=1000
     )
-
     print(f"[{topico}] Escuchando mensajes...")
 
     try:
