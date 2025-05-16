@@ -6,17 +6,34 @@ public class TextToNewsProccesors {
 
     static String processSportsData(Map<String, Object> data) {
         // Implement your sports data processing logic here
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } // Simulate processing time
-        return "Processed sports data: " + data.toString();
+        
+        String scores = (String) data.get("scores");
+        String teams = (String) data.get("teams");
+        String date = (String) data.get("date");
+        String location = (String) data.get("location");
+        String reds = (String) data.get("reds");
+        String yellows = (String) data.get("yellows");
+        String highlights = (String) data.get("highlights");
+        
+        String newsHeadline = "Los equipos: " + teams + " jugaron el " + date + " en el estadio principal de " + location;
+        String newsBody = "El partido terminó con un marcador de " + scores + ". " +
+                "Los equipos recibieron " + reds + " tarjetas rojas y " + yellows + " tarjetas amarillas. " +
+                "Los mejores momentos del partido fueron: " + highlights;
+
+        return newsHeadline + "\n" + newsBody;
     }
     static String processPoliticsData(Map<String, Object> data) {
-        // Implement your politics data processing logic here
-        return "Processed politics data: " + data.toString();
+        
+        String event = (String) data.get("event");
+        String location = (String) data.get("location");
+        String date = (String) data.get("date");
+        String participants = (String) data.get("participants");
+        String decisions = (String) data.get("decisions");
+        String newsHeadline = "El evento político: " + event + " tuvo lugar en " + location + " el " + date;
+        String newsBody = "Los participantes fueron: " + participants + ". " +
+                "Las decisiones tomadas fueron: " + decisions;
+
+        return newsHeadline + "\n" + newsBody;
     }
     static String processTechnologyData(Map<String, Object> data) {
         // Implement your technology data processing logic here
