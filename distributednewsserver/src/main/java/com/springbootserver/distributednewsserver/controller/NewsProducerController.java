@@ -20,21 +20,20 @@ public class NewsProducerController {
     @Autowired
     private DataToNewsProcessorService dataToNewsProcessorService;
     
-    @PostMapping
-    public ResponseEntity<?> sendNews(@RequestBody SendNewsDto newsDto) {
+    @PostMapping //if no topic is specified, it will be sent to processData
+    public ResponseEntity<?> sendNews(@RequestBody String anyData) {
         // Send the news message to the specified Kafka topic
         try{
-        if (newsDto.getTopicName() == null || newsDto.getTopicName().isEmpty()) {
+        if (anyData == null || anyData.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request");
         }   
-            SendNewsDto processedNews = dataToNewsProcessorService.processData(newsDto.getMessage()).get();
+            SendNewsDto processedNews = dataToNewsProcessorService.processData(anyData).get();
             newsProducerService.sendNews(processedNews.getTopicName(), processedNews.getMessage());
-            return ResponseEntity.status(HttpStatus.CREATED).body(newsDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(processedNews);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending news: " + e.getMessage());
         
         }
-    }
-    
+    }    
 
 }
