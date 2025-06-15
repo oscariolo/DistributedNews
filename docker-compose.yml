@@ -30,6 +30,28 @@ services:
       - "19000:9000"
     environment:
       - KAFKA_BROKERCONNECT=kafka:9093
+  
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "8000:8000"
+    command: [serve]
+  
+  spring-server:
+    build:
+      context: ./distributednewsserver
+      dockerfile: Dockerfile
+    container_name: server
+    ports:
+      - "5000:8080"
+    depends_on:
+      - kafka
+      - ollama
+    environment:
+      KAFKA_BROKER_URL: kafka:9093
+      OLLAMA_API_URL: http://ollama:8000
+
 networks:
   kafka-net:
     driver: bridge
